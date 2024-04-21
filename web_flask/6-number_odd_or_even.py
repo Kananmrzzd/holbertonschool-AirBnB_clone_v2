@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 
 '''
-task 4
+task 6
 '''
 
-from flask import Flask
+from flask import Flask, render_template
 from markupsafe import escape
 
 
@@ -32,9 +32,20 @@ def py_is_fun(text):
     return f'Python {escape(text).replace("_", " ")}'
 
 
-@app.route("/number/<int:n>")
+@app.route("/number/<int:n>", strict_slashes=False)
 def number(n):
     return f'{escape(n)} is a number'
+
+
+@app.route("/number_template/<int:n>", strict_slashes=False)
+def num_temp(n):
+    return render_template("5-number.html", n=n)
+
+
+@app.route("/number_odd_or_even/<int:n>", strict_slashes=False)
+def num_o_even(n):
+    return render_template("6-number_odd_or_even.html",
+                           e_o="odd" if n % 2 else "even", n=n)
 
 
 if __name__ == '__main__':
